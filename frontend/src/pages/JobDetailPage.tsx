@@ -104,8 +104,7 @@ const JobDetailPage = () => {
           validThrough: job.deadline || undefined,
         }}
       />
-    </>
-    <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-6">
@@ -391,6 +390,7 @@ const JobDetailPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

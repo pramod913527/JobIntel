@@ -17,6 +17,11 @@ import AdminJobs from "./pages/admin/AdminJobs";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminReferrals from "./pages/admin/AdminReferrals";
+import AdminCrawlers from "./pages/admin/AdminCrawlers";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminRevenue from "./pages/admin/AdminRevenue";
+import AdminSettings from "./pages/admin/AdminSettings";
+import AdminCrawlers from "./pages/admin/AdminCrawlers";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +53,10 @@ const App = () => (
             <Route path="users" element={<AdminUsers />} />
             <Route path="notifications" element={<AdminNotifications />} />
             <Route path="referrals" element={<AdminReferrals />} />
+            <Route path="crawlers" element={<AdminCrawlers />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
+            <Route path="revenue" element={<AdminRevenue />} />
+            <Route path="settings" element={<AdminSettings />} />
           </Route>
           
           <Route path="*" element={<NotFound />} />
