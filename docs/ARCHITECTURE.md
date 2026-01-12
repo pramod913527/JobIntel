@@ -35,3 +35,57 @@ Questions / Inputs needed
 - Cloud provider and account preferences
 - LLM provider and API limits/cost constraints
 - Messaging channel credentials (SMTP, WhatsApp Cloud, Telegram Bot)
+
+## Architecture Diagram (Mermaid)
+
+```mermaid
+flowchart LR
+	subgraph Frontend
+		A[React (Vite) - Public UI & Admin] -->|API calls| B[API Gateway / Backend API]
+	end
+
+	subgraph Backend
+		B --> C[Express.js API]
+		C --> D[Auth Service (JWT + RBAC)]
+		C --> E[Jobs Service]
+		C --> F[Matching Service]
+		C --> G[Notification Engine]
+	end
+
+	subgraph Data
+		E --> M[MongoDB (Mongoose)]
+		D --> M
+		G --> M
+	end
+
+	subgraph QueueCache
+		Q[Redis] -->|queues| W[BullMQ Workers]
+		C -->|enqueue| Q
+		W -->|work| C
+	end
+
+	subgraph Workers
+		W --> P1[Playwright Crawlers]
+		W --> P2[AI Parser Worker]
+		W --> P3[Notification Worker]
+	end
+
+	subgraph Integrations
+		P2 --> LLM[LLM Provider (OpenAI/Azure/...)]
+		P3 --> SMTP[Nodemailer / SMTP]
+		P3 --> WA[WhatsApp Cloud API]
+		P3 --> TG[Telegram Bot API]
+	end
+
+	%% Admin and Ops
+	Admin[Admin UI] --> B
+	CI[CI/CD / Docker] -.-> C
+	Monitoring[Logs / Metrics / Sentry] -.-> C
+
+	style Frontend fill:#f9f,stroke:#333,stroke-width:1px
+	style Backend fill:#bbf,stroke:#333,stroke-width:1px
+	style Workers fill:#bfb,stroke:#333,stroke-width:1px
+	style Data fill:#ffd,stroke:#333,stroke-width:1px
+	style Integrations fill:#fee,stroke:#333,stroke-width:1px
+
+```
