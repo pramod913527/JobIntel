@@ -37,6 +37,30 @@ npm run dev
 - shadcn-ui
 - Tailwind CSS
 
+## Monorepo commands
+
+Run both services locally (requires root dependencies installed):
+
+```bash
+# install dev tools at root
+npm install
+
+# install workspace dependencies
+npm run install:all
+
+# run frontend + backend concurrently
+npm run dev
+```
+
+Or use the `Makefile`:
+
+```bash
+make install
+make dev
+```
+
+CI: see `.github/workflows/ci.yml` for the basic pipeline (install, lint, build).
+
 ## Deployment
 
 Build with `npm run build` and deploy the generated `dist` directory to your hosting provider.
