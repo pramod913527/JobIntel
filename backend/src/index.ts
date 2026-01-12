@@ -7,6 +7,8 @@ import authRoutes from "./routes/auth";
 import jobRoutes from "./routes/job";
 import companyRoutes from "./routes/company";
 import applicationRoutes from "./routes/application";
+import seoRoutes from "./routes/seo";
+import openapiRoutes from "./routes/openapi";
 
 dotenv.config();
 const log = debug("jobintel:server");
@@ -23,6 +25,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/docs", openapiRoutes);
+app.use(seoRoutes);
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || "";
