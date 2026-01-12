@@ -89,3 +89,51 @@ flowchart LR
 	style Integrations fill:#fee,stroke:#333,stroke-width:1px
 
 ```
+
+## Sequence Flows
+
+### Job Ingestion Sequence
+
+```mermaid
+sequenceDiagram
+	participant Crawler as Playwright Crawler
+	participant Parser as AI Parser
+	participant API as Backend API
+	participant DB as MongoDB
+	participant Matcher as Matching Service
+	participant Queue as Redis/BullMQ
+	participant Notifier as Notification Worker
+	Crawler->>Parser: Send raw HTML / change delta
+	Parser->>API: POST /ingest (structured job)
+	API->>DB: Insert job (status: draft)
+	API->>DB: If auto-approve -> set status: published
+	API->>Matcher: Trigger match job -> push to Queue
+	Queue->>Notifier: Enqueue notification tasks
+	Notifier->>Notifier: Apply user prefs & fallback rules
+	Notifier->>Notifier: Dispatch via channels (WhatsApp/Email/Telegram)
+```
+
+### Notification Flow with Fallback
+
+```mermaid
+sequenceDiagram
+	participant Engine as Notification Engine
+	participant WA as WhatsApp
+	participant Email as SMTP
+	participant TG as Telegram
+
+	Engine->>WA: sendMessage(user, payload)
+	alt success
+		WA-->>Engine: delivered
+	else failure
+		WA-->>Engine: error
+		Engine->>Email: sendEmail(user, payload)
+		alt email success
+			Email-->>Engine: delivered
+		else email failure
+			Email-->>Engine: error
+			Engine->>TG: sendMessage(user, payload)
+		end
+	end
+
+```
