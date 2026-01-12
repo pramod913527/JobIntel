@@ -23,16 +23,17 @@ app.use("/api/jobs", jobRoutes);
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || "";
 
-connectDB(MONGODB_URI)
-  .then(() => {
-    app.listen(PORT, () => {
-      log(`Backend listening on http://localhost:${PORT}`);
-      // eslint-disable-next-line no-console
-      console.log(`Backend listening on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
+(async () => {
+  try {
+    await connectDB(MONGODB_URI);
+    log("DB connected");
+  } catch (err) {
+    console.warn("Failed to connect to DB (continuing in degraded mode):", err?.message || err);
+  }
+
+  app.listen(PORT, () => {
+    log(`Backend listening on http://localhost:${PORT}`);
     // eslint-disable-next-line no-console
-    console.error("Failed to connect to DB", err);
-    process.exit(1);
+    console.log(`Backend listening on http://localhost:${PORT}`);
   });
+})();
