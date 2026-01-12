@@ -4,6 +4,13 @@
 
 This repository contains the JobScout web application.
 
+Repository layout (scaffold):
+
+- `frontend/` — (current app lives at project root `src/` and `public/`) Front-end React app. We can move files here on request.
+- `backend/` — Express + TypeScript starter (see `backend/README.md`).
+- `database/` — database migrations and helpers.
+- `types/` — shared TypeScript types used across services.
+
 ## Editing and running locally
 
 You can edit and run this project locally with Node.js and npm installed.
