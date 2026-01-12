@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import Seo from '@/components/Seo';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -86,6 +87,24 @@ const JobDetailPage = () => {
   };
 
   return (
+    <>
+      <Seo
+        title={`${job.title} — ${job.company.name}`}
+        description={job.description?.slice(0, 160)}
+        url={`${window.location.origin}/jobs/${job.id}`}
+        jsonLd={{
+          "@context": "https://schema.org/",
+          "@type": "JobPosting",
+          title: job.title,
+          description: job.description,
+          datePosted: job.postedAt,
+          hiringOrganization: { name: job.company.name, sameAs: job.company.website || undefined },
+          employmentType: job.type,
+          jobLocation: { address: job.location },
+          validThrough: job.deadline || undefined,
+        }}
+      />
+    </>
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border">

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import SubscribeForm from '@/components/SubscribeForm';
 import { Badge } from '@/components/ui/badge';
 import {
   Check,
@@ -187,6 +188,13 @@ const PricingPage = () => {
                 </ul>
               </div>
             ))}
+          </div>
+          <div className="max-w-5xl mx-auto mt-8">
+            <div className="bg-card rounded-xl p-6 border border-border">
+              <h3 className="text-lg font-semibold mb-3">Stay Updated</h3>
+              <p className="text-sm text-muted-foreground mb-4">Subscribe to product updates and release notes.</p>
+              <SubscribeForm />
+            </div>
           </div>
         </div>
       </section>
