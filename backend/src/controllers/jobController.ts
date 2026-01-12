@@ -24,6 +24,29 @@ export async function getJob(req: Request, res: Response) {
   }
 }
 
+// Update job
+export async function updateJob(req: Request, res: Response) {
+  try {
+    const updates = req.body;
+    const job = await Job.findByIdAndUpdate(req.params.id, { $set: updates }, { new: true }).lean();
+    if (!job) return res.status(404).json({ error: "not found" });
+    return res.json(job);
+  } catch (err) {
+    return res.status(500).json({ error: "failed to update job", details: err });
+  }
+}
+
+// Delete job
+export async function deleteJob(req: Request, res: Response) {
+  try {
+    const job = await Job.findByIdAndDelete(req.params.id).lean();
+    if (!job) return res.status(404).json({ error: "not found" });
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ error: "failed to delete job", details: err });
+  }
+}
+
 // List jobs (simple)
 export async function listJobs(req: Request, res: Response) {
   try {

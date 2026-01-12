@@ -5,6 +5,8 @@ import debug from "debug";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/auth";
 import jobRoutes from "./routes/job";
+import companyRoutes from "./routes/company";
+import applicationRoutes from "./routes/application";
 
 dotenv.config();
 const log = debug("jobintel:server");
@@ -19,6 +21,8 @@ app.get("/api/health", (_req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
+app.use("/api/companies", companyRoutes);
+app.use("/api/applications", applicationRoutes);
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || "";
